@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personal_access_tokens', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->morphs('tokenable');
-            $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
-            $table->timestamp('expires_at')->nullable();
+            $table-> foreignUuid('categoria_id')->constrained();
+            $table -> foreignUuid('gender_id')-> constrained();
+            $table -> string('nombre');
+            $table -> text('descripcion');
+            $table -> decimal('precio', 12 ,2);
+            $table->timestamp('deleted_at')->nullable()->default(null);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('personal_access_tokens');
+        Schema::dropIfExists('products');
     }
 };
